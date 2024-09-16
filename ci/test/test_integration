@@ -34,6 +34,8 @@ function get_parameters() {
 get_parameters $@
 cleanup
 
+export REGISTRY_URL=${INFRAPOOL_REGISTRY_URL:-"docker.io"}
+
 echo "Building API container..."
 docker_compose_command build test
 

@@ -137,6 +137,9 @@ pipeline {
     }
 
     stage('Integration tests') {
+      environment {
+        INFRAPOOL_REGISTRY_URL = "registry.tld"
+      }
       steps {
         script {
           grantIPAccess(infrapool)
