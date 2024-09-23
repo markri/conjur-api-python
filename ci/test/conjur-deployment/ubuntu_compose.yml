@@ -24,12 +24,12 @@ services:
       - ${PWD}/ci/test/conjur-deployment/configuration/https/:/tmp/conf
 
   pg:
-    image: postgres:9.4
+    image: postgres:15
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
 
   conjur:
-    image: cyberark/conjur:latest
+    image: ${REGISTRY_URL:-docker.io}/cyberark/conjur:edge
     command: server -a dev -f /policy/initial_policy.yml
     environment:
       CONJUR_DATA_KEY: 'OyXV68Mip14xj33huGaQKewmmS+gKtDlp6ECZ2iATpU='
