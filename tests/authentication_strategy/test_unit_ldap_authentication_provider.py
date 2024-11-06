@@ -13,6 +13,8 @@ class LdapAuthenticationStrategyTest(AsyncTestCase):
         connection_info = ConjurConnectionInfo(conjur_url, "some_account", None, "service-id")
 
         credentials_provider = SimpleCredentialsProvider()
+        # file deepcode ignore NoHardcodedCredentials/test: This is a test file
+        # file deepcode ignore NoHardcodedPasswords/test: This is a test file
         credentials = CredentialsData(password="mypassword", machine=conjur_url)
         credentials_provider.save(credentials)
 

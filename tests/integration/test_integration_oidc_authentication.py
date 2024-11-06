@@ -40,6 +40,7 @@ class TestOidcAuthentication(AsyncTestCase):
         headers = {'content-type': 'application/x-www-form-urlencoded'}
         body = {'grant_type': 'password', 'username': 'john.williams', 'password': 'pwd', 'scope': 'openid'}
 
+        # file deepcode ignore SSLVerificationBypass/test: This is a test file and we are using a local server
         x = requests.post(url, data=body, headers=headers, verify=False,
                           auth=HTTPBasicAuth('client-credentials-mock-client', 'client-credentials-mock-client-secret'))
 
