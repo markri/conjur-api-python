@@ -1,2 +1,6 @@
+[MESSAGES CONTROL]
+# Disable "too-many-positional-arguments".
+# Can't be ignored individually b/c it's not a known rule for the pylint hook running in CI.
+disable=R0917
 [FORMAT]
 max-line-length=120

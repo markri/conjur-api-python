@@ -8,7 +8,7 @@ Provides high-level interface for programmatic API interactions
 # Builtins
 import logging
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Tuple
 from urllib import parse
 
 from conjur_api.errors.errors import HttpStatusError, InvalidResourceException, MissingRequiredParameterException
@@ -102,7 +102,7 @@ class Api:
                 self.ssl_verification_data
             )
 
-    async def authenticate(self) -> tuple[str, datetime]:
+    async def authenticate(self) -> Tuple[str, datetime]:
         """
         Authenticate based on the chosen strategy to fetch a short-lived conjur_api token that
         for a limited time will allow you to interact fully with the Conjur vault.
