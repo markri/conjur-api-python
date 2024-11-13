@@ -34,6 +34,7 @@ class SimpleCredentialsProviderTest(TestCase):
 
         credentials_data = create_credentials("some_machine", old_username)
         provider.save(credentials_data)
+        # file deepcode ignore NoHardcodedCredentials/test: This is a test file
         credentials_data.username = "different_username"
         self.assertNotEqual(credentials_data, provider.load(credentials_data.machine))
         self.assertEqual(old_username, provider.load(credentials_data.machine).username)

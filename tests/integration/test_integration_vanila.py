@@ -20,6 +20,7 @@ class TestIntegrationVanila(AsyncTestCase):
         @return:
         """
         conjur_url = "https://conjur-https"
+        # file deepcode ignore NoHardcodedCredentials/test: This is a test file
         username = "admin"
         account = "dev"
         api_key = os.environ['CONJUR_AUTHN_API_KEY']
