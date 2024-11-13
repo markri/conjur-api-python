@@ -7,6 +7,7 @@ import base64
 import json
 import logging
 from datetime import datetime, timedelta
+from typing import Tuple
 
 from conjur_api.errors.errors import MissingRequiredParameterException
 from conjur_api.http.endpoints import ConjurEndpoint
@@ -49,7 +50,7 @@ class AuthnAuthenticationStrategy(AuthenticationStrategyInterface):
         creds.api_key = await self._send_login_request(ssl_verification_data, connection_info, creds)
         return creds.api_key
 
-    async def authenticate(self, connection_info, ssl_verification_data) -> tuple[str, datetime]:
+    async def authenticate(self, connection_info, ssl_verification_data) -> Tuple[str, datetime]:
         """
         Authenticate uses the api_key (retrieved in `login()`) to fetch a short-lived conjur_api token that
         for a limited time will allow you to interact fully with the Conjur vault.
