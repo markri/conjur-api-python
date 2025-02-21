@@ -35,7 +35,7 @@ services:
       CONJUR_ACCOUNT: dev
       DATABASE_URL: postgres://postgres@pg/postgres
       RAILS_ENV: development
-      CONJUR_AUTHENTICATORS: authn-ldap/test-service,authn-oidc/test-service,authn
+      CONJUR_AUTHENTICATORS: authn-ldap/test-service,authn-oidc/test-service,authn-jwt/test-service,authn
       LDAP_URI: ldap://ldap-server:389
       LDAP_BASE: dc=conjur,dc=net
       LDAP_BINDDN: cn=admin,dc=conjur,dc=net
@@ -50,6 +50,7 @@ services:
       - pg
       - ldap-server
       - oidc-server
+      - jwt-server
 
   conjur-https:
     image: nginx:alpine
@@ -108,6 +109,19 @@ services:
       - "9443:443"
     volumes:
       - ${PWD}/ci/test/conjur-deployment/configuration/oidc:/oidc:ro
+  
+  jwt-server:
+    build:
+      context: ./mock-jwt-server
+      dockerfile: Dockerfile
+    ports:
+      - 8008:8080
+    environment:
+      ISSUER: "jwt-server"
+      AUDIENCE: "conjur"
+      SUBJECT: "test-workload"
+      EMAIL: "workload@example.com"
+      EXTERNAL_PORT: "8008"
 
   test:
     privileged: true

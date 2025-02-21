@@ -9,12 +9,15 @@ import base64
 import json
 import logging
 from datetime import datetime, timedelta
+from typing import Tuple
 
 from conjur_api.errors.errors import MissingRequiredParameterException
 from conjur_api.http.endpoints import ConjurEndpoint
-from conjur_api.models.general.conjur_connection_info import ConjurConnectionInfo
-from conjur_api.models.ssl.ssl_verification_metadata import SslVerificationMetadata
 from conjur_api.interface import AuthenticationStrategyInterface
+from conjur_api.models.general.conjur_connection_info import \
+    ConjurConnectionInfo
+from conjur_api.models.ssl.ssl_verification_metadata import \
+    SslVerificationMetadata
 from conjur_api.wrappers.http_wrapper import HttpVerb, invoke_endpoint
 
 # Tokens should only be reused for 5 minutes (max lifetime is 8 minutes)
@@ -32,7 +35,7 @@ class JWTAuthenticationStrategy(AuthenticationStrategyInterface):
     def __init__(self, jwt_token: str):
         """
         Initializes the JWTAuthenticationStrategy with a JWT token.
-        
+
         :param jwt_token: The JWT token to authenticate with
         """
         self.jwt_token = jwt_token  # Store JWT token in the class
@@ -41,7 +44,7 @@ class JWTAuthenticationStrategy(AuthenticationStrategyInterface):
         self,
         connection_info: ConjurConnectionInfo,
         ssl_verification_data: SslVerificationMetadata,
-    ) -> tuple[str, datetime]:
+    ) -> Tuple[str, datetime]:
         """
         Authenticate method makes a POST request to the authentication endpoint,
         retrieves a token, and calculates the token expiration.
@@ -49,7 +52,7 @@ class JWTAuthenticationStrategy(AuthenticationStrategyInterface):
         logging.debug("Authenticating to %s...", connection_info.conjur_url)
 
         api_token = await self._send_authenticate_request(ssl_verification_data, connection_info)
-        
+
         return api_token, self._calculate_token_expiration(api_token)
 
     async def _send_authenticate_request(self, ssl_verification_data, connection_info):
@@ -76,6 +79,7 @@ class JWTAuthenticationStrategy(AuthenticationStrategyInterface):
             raise MissingRequiredParameterException("service_id is required for authn-jwt")
 
     @staticmethod
+    # pylint: disable=bare-except
     def _calculate_token_expiration(api_token: str) -> datetime:
         """
         Calculate the expiration of the token by decoding the payload and extracting 'exp'.

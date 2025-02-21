@@ -114,12 +114,14 @@ We provide the `AuthnAuthenticationStrategy` for the default Conjur authenticato
 authn_provider = AuthnAuthenticationStrategy(credentials_provider)
 ```
 
-We also provide the `LdapAuthenticationStrategy` for the ldap authenticator, and `OidcAuthenticationStrategy` for the OIDC authenticator.
+We also provide the `LdapAuthenticationStrategy`, `OidcAuthenticationStrategy`, and `JWTAuthenticationStrategy` for the
+ldap, oidc, and jwt authenticators respectively.
 Example use:
 
 ```python
 authn_provider = LdapAuthenticationStrategy(credentials_provider)
 authn_provider = OidcAuthenticationStrategy(credentials_provider)
+jwt_provider = JWTAuthenticationStrategy(token)
 ```
 
 When using these strategies, make sure `connection_info` has a `service_id` specified.
