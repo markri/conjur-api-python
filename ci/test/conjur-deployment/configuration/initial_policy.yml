@@ -4,6 +4,11 @@
 - !user test-valid-user
 - !user test-invalid-user
 
+- !host
+  id: workload@example.com
+  annotations:
+    authn-jwt/test-service/sub: test-workload
+
 - !policy
   id: conjur
   body: []
@@ -58,6 +63,26 @@
     privilege: [ read, authenticate ]
     resource: !webservice
 
+- !policy
+  id: conjur/authn-jwt/test-service
+  body:
+  - !webservice
+
+  - !webservice
+    id: status
+
+  - !variable jwks-uri
+  - !variable token-app-property
+  - !variable issuer
+  - !variable audience
+
+  - !group users
+
+  - !permit
+    role: !group users
+    privilege: [ read, authenticate ]
+    resource: !webservice
+
 - !grant
   role: !group conjur/authn-ldap/test-service/users
   member: !user alice
@@ -65,6 +90,10 @@
 - !grant
   role: !group conjur/authn-oidc/test-service/users
   member: !user john.williams
+
+- !grant
+  role: !group conjur/authn-jwt/test-service/users
+  member: !host workload@example.com
 
 - !permit
   role: !user alice

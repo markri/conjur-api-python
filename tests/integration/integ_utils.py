@@ -6,6 +6,7 @@ from conjur_api.models import CredentialsData, SslVerificationMode
 from conjur_api.models.general.conjur_connection_info import ConjurConnectionInfo
 from conjur_api.providers import SimpleCredentialsProvider, AuthnAuthenticationStrategy, LdapAuthenticationStrategy
 from conjur_api.providers.oidc_authentication_strategy import OidcAuthenticationStrategy
+from conjur_api.providers.jwt_authentication_strategy import JWTAuthenticationStrategy
 
 
 class ConjurUser:
@@ -18,6 +19,7 @@ class AuthenticationStrategyType(Enum):
     AUTHN = 'AUTHN'
     LDAP = 'LDAP'
     OIDC = 'OIDC'
+    JWT  = 'JWT'
 
 
 async def create_client(username: str, password: str,
@@ -37,6 +39,8 @@ async def create_client(username: str, password: str,
     authn_strategy: AuthenticationStrategyInterface
     if authn_strategy_type == AuthenticationStrategyType.OIDC:
         authn_strategy = OidcAuthenticationStrategy(credentials_provider)
+    elif authn_strategy_type == AuthenticationStrategyType.JWT:
+        authn_strategy = JWTAuthenticationStrategy(password) # password is the JWT token
     elif authn_strategy_type == AuthenticationStrategyType.LDAP:
         authn_strategy = LdapAuthenticationStrategy(credentials_provider)
     else:

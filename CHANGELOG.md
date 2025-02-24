@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.1.3] - 2025-02-24
+
+### Added
+- Add support for authn-jwt
+  [cyberark/conjur-api-python#50](https://github.com/cyberark/conjur-api-python/pull/50)
+
 ## [0.1.2] - 2024-08-01
 
 ### Security

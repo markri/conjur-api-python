@@ -36,6 +36,12 @@ cleanup
 
 export REGISTRY_URL=${INFRAPOOL_REGISTRY_URL:-"docker.io"}
 
+# Ensure we are in repo root
+cd "$(git rev-parse --show-toplevel)"
+# Clone mock-jwt-server dependency
+rm -rf mock-jwt-server
+git clone https://github.com/gl-johnson/mock-jwt-server.git || true
+
 echo "Building API container..."
 docker_compose_command build test
 

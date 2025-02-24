@@ -7,3 +7,4 @@ from conjur_api.providers.simple_credentials_provider import SimpleCredentialsPr
 from conjur_api.providers.authn_authentication_strategy import AuthnAuthenticationStrategy
 from conjur_api.providers.ldap_authentication_strategy import LdapAuthenticationStrategy
 from conjur_api.providers.oidc_authentication_strategy import OidcAuthenticationStrategy
+from conjur_api.providers.jwt_authentication_strategy import JWTAuthenticationStrategy
